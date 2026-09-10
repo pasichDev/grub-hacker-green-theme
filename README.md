@@ -44,22 +44,6 @@ theme.txt errors before rebooting.
 bash scripts/build.sh
 ```
 
-Regenerates everything in `theme/` (fonts, background, corner brackets).
-
-## Notes / gotchas hit while building this
-
-- GRUB's theme parser (`grub-core/gfxmenu`) only accepts **integer** numbers
-  for `left`/`top`/`width`/`height` (plain pixels or `N%`) — a value like
-  `36.5%` fails with `error: unrecognized number.`
-- GRUB's built-in PNG decoder (`png.mod`) only supports **8-bit** color
-  depth. ImageMagick's `radial-gradient:` (and some other generators)
-  produce 16-bit PNGs by default, which fail with `error: invalid filter
-  value.` at render time. Always `convert ... -depth 8 ...` (or check with
-  `identify -format '%z-bit' file.png`).
-- `GRUB_TIMEOUT_STYLE="hidden"` (Ubuntu's default) means the themed menu
-  never actually renders unless a key is pressed during boot — set it to
-  `"menu"` to see the theme every boot.
-
 ## License
 
 MIT — see [LICENSE](LICENSE).
